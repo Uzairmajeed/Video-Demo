@@ -5,10 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.ui.PlayerView
+import com.google.android.exoplayer2.ui.StyledPlayerView
 
 
 class VideoUrlActivity : AppCompatActivity() {
-    private lateinit var exoPlayerView: PlayerView
+    private lateinit var exoPlayerView: StyledPlayerView
     private lateinit var exoPlayer: ExoPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +29,9 @@ class VideoUrlActivity : AppCompatActivity() {
         exoPlayer.play()
     }
 
-    override fun onDestroy() {
+  /*  override fun onDestroy() {
         super.onDestroy()
         // Release the player when the activity is destroyed
         exoPlayer.release()
-    }
+    }*/
 }
