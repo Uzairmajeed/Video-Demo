@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#C69797"
     tools:context=".VideoUrlActivity">
 
     <FrameLayout
@@ -17,10 +18,20 @@
             android:id="@+id/exoplayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:resize_mode="fit"
-            app:use_controller="true">
+            app:resize_mode="fixed_width"
+            app:use_controller="true"/>
 
-        </com.google.android.exoplayer2.ui.StyledPlayerView>
+            <ImageButton
+                android:id="@+id/lockButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="top|end"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="14dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_lock_open_24" />
+
+
     </FrameLayout>
 
 
