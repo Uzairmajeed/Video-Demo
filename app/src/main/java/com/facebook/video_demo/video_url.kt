@@ -141,7 +141,7 @@ class VideoUrlActivity : AppCompatActivity() {
                 // Update progress bar position and time
                 updateProgressBarAndTime()
                 // Call this runnable again after 1000 milliseconds (1 second)
-                handler.postDelayed(this, 1000)
+                handler.postDelayed(this, 100)
             }
         })
     }
