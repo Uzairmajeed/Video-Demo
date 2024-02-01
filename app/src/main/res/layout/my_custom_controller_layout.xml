@@ -1,0 +1,95 @@
+<!-- res/layout/my_custom_controller_layout.xml -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <!-- Previous Video Button -->
+        <ImageButton
+            android:id="@+id/prevButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_skip_previous_24"
+            android:background="@android:color/transparent"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="20dp" />
+
+        <!-- Rewind Button -->
+        <ImageButton
+            android:id="@+id/rewindButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_fast_rewind_24"
+            android:background="@android:color/transparent"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="20dp" />
+
+        <!-- Play/Pause Button -->
+        <ImageButton
+            android:id="@+id/playPauseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_pause_24"
+            android:background="@android:color/transparent"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="20dp"
+            android:paddingBottom="15dp"/>
+
+        <!-- Fast Forward Button -->
+        <ImageButton
+            android:id="@+id/fastForwardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_fast_forward_24"
+            android:background="@android:color/transparent"
+            app:tint="@android:color/white"
+            android:layout_marginEnd="20dp" />
+
+        <!-- Next Video Button -->
+        <ImageButton
+            android:id="@+id/nextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_skip_next_24"
+            android:background="@android:color/transparent"
+            app:tint="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Progress Bar -->
+    <com.google.android.exoplayer2.ui.DefaultTimeBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="38dp"
+        app:unplayed_color="#F2F4ED"
+        app:buffered_color="#8C8484"
+        app:played_color="#D60B0B"
+        app:scrubber_color="#D60B0B"/>
+
+    <!-- Time TextView -->
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp"
+        android:text="0:00/0:00"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</RelativeLayout>
