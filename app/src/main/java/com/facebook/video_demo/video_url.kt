@@ -1,5 +1,6 @@
 package com.facebook.video_demo
 
+import SettingsHandler
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,10 @@ class VideoUrlActivity : AppCompatActivity() {
     private var isLocked = false // Variable to track the lock state
     private  lateinit var progressBar:DefaultTimeBar
     private lateinit var timeTextView: TextView
+    private lateinit var speakerButton: ImageButton
+    private var isMuted = false // Variable to track the mute state
+    private lateinit var settingsButton: ImageButton
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +39,10 @@ class VideoUrlActivity : AppCompatActivity() {
         val prevButton = findViewById<ImageButton>(R.id.prevButton)
         val nextButton = findViewById<ImageButton>(R.id.nextButton)
         progressBar = findViewById<DefaultTimeBar>(R.id.progressBar)
+        speakerButton = findViewById(R.id.speaker)
+        settingsButton = findViewById(R.id.settings)
+
+
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -42,7 +51,16 @@ class VideoUrlActivity : AppCompatActivity() {
 
         imageButton=findViewById(R.id.lockButton)
         exoPlayerView = findViewById(R.id.exoplayer)
+        // Set click listener for the speaker button
+        speakerButton.setOnClickListener {
+            toggleMuteState()
+        }
 
+        //set the click listner for settings button..
+        settingsButton.setOnClickListener {
+            // Initialize the Settings class
+           SettingsHandler(this,settingsButton)
+        }
 
         // Create an instance of the ExoPlayer..
         exoPlayer = ExoPlayer.Builder ( this).build()
@@ -132,7 +150,6 @@ class VideoUrlActivity : AppCompatActivity() {
         exoPlayer.play()
     }
 
-    // Function to start updating the progress bar
     // Function to start updating the progress bar and time
     private fun startUpdatingProgressBarAndTime() {
         val handler = android.os.Handler()
@@ -203,6 +220,26 @@ class VideoUrlActivity : AppCompatActivity() {
         imageButton.setImageResource(imageResource)
         imageButton.setBackgroundResource(android.R.color.transparent) // Set background to transparent
 
+    }
+
+    // Function to toggle the mute state
+    private fun toggleMuteState() {
+        isMuted = !isMuted
+
+        // Toggle the audio on and off
+        exoPlayer.volume = if (isMuted) 0f else 1f
+
+        // Change the image resource of the speaker button
+        updateSpeakerButton()
+    }
+    // Function to update the speaker button image
+    private fun updateSpeakerButton() {
+        val imageResource = if (isMuted) {
+            R.drawable.baseline_volume_off_24 // Change this to the volume off image resource
+        } else {
+            R.drawable.baseline_volume_up_24 // Change this to the volume up image resource
+        }
+        speakerButton.setImageResource(imageResource)
     }
 
     override fun onDestroy() {
