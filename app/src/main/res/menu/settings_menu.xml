@@ -1,8 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_playback_speed"
-        android:title="Playback Speed" />
+        android:title="Playback Speed "/>
     <item
         android:id="@+id/menu_quality"
         android:title="Quality" />
 </menu>
+
+
+
