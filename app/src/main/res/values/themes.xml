@@ -3,7 +3,21 @@
     <style name="Base.Theme.Video_Demo" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="popupMenuBackground">@drawable/custom_menu_item_background</item>
+<!--
+        <item name="android:itemTextAppearance">@style/ChangeTextColor</item>
+-->
+
     </style>
 
     <style name="Theme.Video_Demo" parent="Base.Theme.Video_Demo" />
+
+
+    <!--<style name="ChangeTextColor" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">#EA456E</item>
+        <item name="android:textSize" >20dp</item>
+    </style>-->
+
+
+
 </resources>

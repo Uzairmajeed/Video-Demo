@@ -1,11 +1,58 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_playback_speed"
-        android:title="Playback Speed "/>
-    <item
-        android:id="@+id/menu_quality"
-        android:title="Quality" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/menu_playback_speed"
+                android:title="Playback Speed "
+                android:icon="@android:drawable/ic_menu_search"
+                app:showAsAction="always">
+                <!-- Submenu for PlayBackSpeed -->
+                <menu>
+                    <item
+                        android:id="@+id/speed_normal"
+                        android:title="Normal" />
+                    <item
+                        android:id="@+id/speed_2x"
+                        android:title="2x" />
+                    <item
+                        android:id="@+id/speed_3x"
+                        android:title="3x" />
+                    <item
+                        android:id="@+id/speed_4x"
+                        android:title="4x" />
+                    <item
+                        android:id="@+id/speed_5x"
+                        android:title="5x" />
+                </menu>
+
+            </item>
+
+            <item
+                android:id="@+id/menu_quality"
+                android:title="Quality"
+                android:icon="@android:drawable/ic_menu_search"
+                app:showAsAction="always">
+
+                <!-- Submenu for Quality Speed -->
+                <menu>
+                    <item
+                        android:id="@+id/quality_auto"
+                        android:title="Auto" />
+                    <item
+                        android:id="@+id/quality_1080p"
+                        android:title="1080p" />
+                    <item
+                        android:id="@+id/quality_720p"
+                        android:title="720p" />
+                    <item
+                        android:id="@+id/quality_480p"
+                        android:title="480p" />
+                </menu>
+
+            </item>
+        </menu>
+    </item>
+
 </menu>
-
-
-
