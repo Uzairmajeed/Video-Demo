@@ -3,6 +3,8 @@ package com.facebook.video_demo
 import SettingsHandler
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
@@ -14,6 +16,13 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.DefaultTimeBar
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.ui.TimeBar
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
 
 class VideoUrlActivity : AppCompatActivity() {
@@ -27,6 +36,10 @@ class VideoUrlActivity : AppCompatActivity() {
     private var isMuted = false // Variable to track the mute state
     private lateinit var settingsButton: ImageButton
 
+    //These are for the ads playing ..
+    private var mInterstitialAd: InterstitialAd? = null
+    private final val TAG = "MainActivity"
+    private var adDisplayed = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +64,12 @@ class VideoUrlActivity : AppCompatActivity() {
 
         imageButton=findViewById(R.id.lockButton)
         exoPlayerView = findViewById(R.id.exoplayer)
+
+
+       //Initializing Google sdk ads here..and also building build request..
+        MobileAds.initialize(this) {}
+        val adRequest = AdRequest.Builder().build()
+
         // Set click listener for the speaker button
         speakerButton.setOnClickListener {
             toggleMuteState()
@@ -113,6 +132,20 @@ class VideoUrlActivity : AppCompatActivity() {
             }
         })
 
+        // Handling loading of ad here..
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                adError?.toString()?.let { Log.d(TAG, it) }
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+                setupAdCallbacks()
+            }
+        })
+
         val mediaItem=MediaItem.fromUri("https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")
         exoPlayer.setMediaItem(mediaItem)
         // Add Player.EventListener to handle player state changes
@@ -155,12 +188,21 @@ class VideoUrlActivity : AppCompatActivity() {
         val handler = android.os.Handler()
         handler.post(object : Runnable {
             override fun run() {
+                adload()
                 // Update progress bar position and time
                 updateProgressBarAndTime()
                 // Call this runnable again after 1000 milliseconds (1 second)
                 handler.postDelayed(this, 100)
             }
         })
+    }
+
+    private fun adload() {
+            if (mInterstitialAd != null) {
+                mInterstitialAd?.show(this)
+            } else {
+                Log.d("TAG", "The interstitial ad wasn't ready yet.")
+            }
     }
 
     // Function to stop updating the progress bar and time
@@ -241,6 +283,44 @@ class VideoUrlActivity : AppCompatActivity() {
         }
         speakerButton.setImageResource(imageResource)
     }
+
+
+    // New function to set up callbacks for interstitial ad events..
+    //Handling Video Here..
+    private fun setupAdCallbacks() {
+        mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                // Interstitial ad dismissed callback
+                adDisplayed = false
+                resumeVideo()
+            }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                adDisplayed = false
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                // Interstitial ad displayed callback
+                adDisplayed = true
+                pauseVideo()
+            }
+        }
+    }
+
+
+
+    private fun pauseVideo() {
+        if (exoPlayer.isPlaying) {
+            exoPlayer.pause()
+        }
+    }
+
+    private fun resumeVideo() {
+        if (!exoPlayer.isPlaying) {
+            exoPlayer.play()
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
